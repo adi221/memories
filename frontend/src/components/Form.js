@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import FileBase from 'react-file-base64';
 import { createPost } from '../actions/postsActions';
+import { updatePost } from '../actions/singlePostActions';
 
 class Form extends Component {
   constructor(props) {
@@ -9,6 +10,7 @@ class Form extends Component {
     this.state = {
       creator: '',
       title: '',
+      message: '',
       tags: '',
       selectedFile: '',
     };
@@ -24,7 +26,11 @@ class Form extends Component {
 
   submitHandler = e => {
     e.preventDefault();
-    this.props.createPost({ ...this.state });
+    if (this.props.edit) {
+      this.props.updatePost(this.props.id, { ...this.state });
+    } else {
+      this.props.createPost({ ...this.state });
+    }
   };
 
   clearHandler = () => {
@@ -33,10 +39,11 @@ class Form extends Component {
 
   render() {
     const { error, success } = this.props.postCreate;
+    const { errorEdit, successEdit } = this.props.postEdit;
 
     return (
       <form onSubmit={this.submitHandler}>
-        <h3>Create a New Memory</h3>
+        <h3>{this.props.title}</h3>
         <input
           type='text'
           placeholder='Creator'
@@ -71,11 +78,6 @@ class Form extends Component {
           onDone={({ base64 }) => this.fileHandler({ base64 })}
           accept='image/x-png,image/jpeg'
         />
-        {/* <input
-          type='file'
-          onChange={this.fileHandler}
-          accept='image/x-png,image/jpeg'
-        /> */}
         <button type='submit' className='submit-btn btn'>
           Submit
         </button>
@@ -86,19 +88,26 @@ class Form extends Component {
         >
           Clear
         </button>
-        {success && <h4>Successfully added</h4>}
-        {error && <h4>{error}</h4>}
+        {(success || successEdit) && <h4>Successfully added</h4>}
+        {(error || errorEdit) && <h4>{error}</h4>}
       </form>
     );
   }
 }
 
+Form.defaultProps = {
+  title: 'Create a New Memory',
+  edit: false,
+};
+
 const mapStateToProps = state => ({
   postCreate: state.postCreate,
+  postEdit: state.postEdit,
 });
 
 const mapDispatchToProps = dispatch => ({
   createPost: post => dispatch(createPost(post)),
+  updatePost: (id, post) => dispatch(updatePost(id, post)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form);

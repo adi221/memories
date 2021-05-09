@@ -6,6 +6,12 @@ import {
   CREATE_POST_REQUEST,
   CREATE_POST_SUCCESS,
   CREATE_POST_FAIL,
+  DELETE_POST_REQUEST,
+  DELETE_POST_SUCCESS,
+  DELETE_POST_FAIL,
+  LIKE_POST_REQUEST,
+  LIKE_POST_SUCCESS,
+  LIKE_POST_FAIL,
 } from '../constants';
 
 export const postsListReducer = (state = { posts: [] }, action) => {
@@ -36,8 +42,27 @@ export const postCreateReducer = (state = { post: {} }, action) => {
   }
 };
 
-export const postDetailsReducer = (state = {}, action) => {
+export const postDeleteReducer = (state = {}, action) => {
   switch (action.type) {
+    case DELETE_POST_REQUEST:
+      return { loading: true };
+    case DELETE_POST_SUCCESS:
+      return { success: true, loading: false };
+    case DELETE_POST_FAIL:
+      return { error: action.payload, loading: false };
+    default:
+      return state;
+  }
+};
+
+export const postLikeReducer = (state = {}, action) => {
+  switch (action.type) {
+    case LIKE_POST_REQUEST:
+      return { loading: true };
+    case LIKE_POST_SUCCESS:
+      return { success: true, loading: false };
+    case LIKE_POST_FAIL:
+      return { error: action.payload, loading: false };
     default:
       return state;
   }
