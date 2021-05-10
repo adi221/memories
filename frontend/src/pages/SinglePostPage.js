@@ -38,7 +38,7 @@ class SinglePostPage extends Component {
       tags,
       likeCount,
       createdAt,
-      creator,
+      username,
       title,
       selectedFile,
       message,
@@ -56,11 +56,13 @@ class SinglePostPage extends Component {
             Tags:
             <p>
               {tags.length > 0 &&
-                tags.map((tag, index) => <span key={index}>#{tag}</span>)}
+                tags
+                  .split(',')
+                  .map((tag, index) => <span key={index}>#{tag.trim()}</span>)}
             </p>
           </div>
           <p className='single-post-line'>
-            Created by: <span>{creator}</span>
+            Created by: <span>{username}</span>
           </p>
           <p className='single-post-line'>
             Created at: <span>{createdAt && createdAt.substring(0, 10)}</span>
@@ -71,12 +73,15 @@ class SinglePostPage extends Component {
           <p className='single-post-line'>
             Content: <span>{message}</span>
           </p>
-          <button
-            className='edit-btn'
-            onClick={() => this.setState({ showForm: !this.state.showForm })}
-          >
-            {this.state.showForm ? 'Close' : 'Edit'}
-          </button>
+          {this.props.postDetails.post.user === this.props.userInfo._id && (
+            <button
+              className='edit-btn'
+              onClick={() => this.setState({ showForm: !this.state.showForm })}
+            >
+              {this.state.showForm ? 'Close' : 'Edit'}
+            </button>
+          )}
+
           {this.state.showForm && (
             <Form title='Edit a memory' id={this.props.match.params.id} edit />
           )}
@@ -88,6 +93,7 @@ class SinglePostPage extends Component {
 
 const mapStateToProps = state => ({
   postDetails: state.postDetails,
+  userInfo: state.userLogin.user,
 });
 
 const mapDispatchToProps = dispatch => ({

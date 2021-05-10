@@ -45,4 +45,19 @@ const signUpUser = async (req, res) => {
   }
 };
 
-export { authUser, signUpUser };
+const getUserDetails = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+
+    if (user) {
+      const { username, email } = user;
+      res.json({ username, email });
+    } else {
+      throw new Error('User not found');
+    }
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+};
+
+export { authUser, signUpUser, getUserDetails };

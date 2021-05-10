@@ -3,10 +3,16 @@ import {
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
   USER_LOGIN_FAIL,
+  USER_LOGOUT,
   USER_SIGNUP_REQUEST,
   USER_SIGNUP_SUCCESS,
   USER_SIGNUP_FAIL,
-  USER_LOGOUT,
+  USER_DETAILS_REQUEST,
+  USER_DETAILS_SUCCESS,
+  USER_DETAILS_FAIL,
+  GET_USER_POSTS_REQUEST,
+  GET_USER_POSTS_SUCCESS,
+  GET_USER_POSTS_FAIL,
 } from '../constants';
 
 export const userLogin = (username, password) => async dispatch => {
@@ -53,4 +59,46 @@ export const userSignUp = (username, email, password) => async dispatch => {
 export const userLogout = () => dispatch => {
   localStorage.removeItem('userInfoMemories');
   dispatch({ type: USER_LOGOUT });
+};
+
+export const getUserDetails = id => async (dispatch, getState) => {
+  try {
+    dispatch({ type: USER_DETAILS_REQUEST });
+
+    const {
+      userLogin: { user },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${user.token}`,
+      },
+    };
+
+    const { data } = await axios.get(`/users/${id}`, config);
+    dispatch({ type: USER_DETAILS_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({ type: USER_DETAILS_FAIL, payload: error.message });
+  }
+};
+
+export const getUserPosts = id => async (dispatch, getState) => {
+  try {
+    dispatch({ type: GET_USER_POSTS_REQUEST });
+    const {
+      userLogin: { user },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${user.token}`,
+      },
+    };
+    const { data } = await axios.get(`/posts/user/${id}`, config);
+    dispatch({ type: GET_USER_POSTS_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({ type: GET_USER_POSTS_FAIL, payload: error.message });
+  }
 };

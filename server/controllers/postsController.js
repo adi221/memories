@@ -86,3 +86,16 @@ export const updatePost = async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 };
+
+export const getUserPosts = async (req, res) => {
+  try {
+    const posts = await PostMessage.find({ user: req.params.id });
+    if (posts) {
+      res.json(posts);
+    } else {
+      throw new Error('No posts to show');
+    }
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};

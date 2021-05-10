@@ -6,6 +6,7 @@ import {
   CREATE_POST_REQUEST,
   CREATE_POST_SUCCESS,
   CREATE_POST_FAIL,
+  CREATE_POST_RESET,
   DELETE_POST_REQUEST,
   DELETE_POST_SUCCESS,
   DELETE_POST_FAIL,
@@ -29,7 +30,7 @@ export const postsListReducer = (state = { posts: [] }, action) => {
   }
 };
 
-export const postCreateReducer = (state = { post: {} }, action) => {
+export const postCreateReducer = (state = {}, action) => {
   switch (action.type) {
     case CREATE_POST_REQUEST:
       return { loading: true };
@@ -37,6 +38,8 @@ export const postCreateReducer = (state = { post: {} }, action) => {
       return { success: true, loading: false };
     case CREATE_POST_FAIL:
       return { error: action.payload, loading: false };
+    case CREATE_POST_RESET:
+      return {};
     default:
       return state;
   }

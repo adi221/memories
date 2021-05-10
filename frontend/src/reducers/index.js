@@ -8,7 +8,12 @@ import {
   postDetailsReducer,
   postEditReducer,
 } from '../reducers/singlePostReducers';
-import { userLoginReducer, userSignUpReducer } from '../reducers/userReducers';
+import {
+  userLoginReducer,
+  userSignUpReducer,
+  userDetailsReducer,
+  userPostsReducer,
+} from '../reducers/userReducers';
 
 const rootReducer = combineReducers({
   posts: postsListReducer,
@@ -18,6 +23,8 @@ const rootReducer = combineReducers({
   postEdit: postEditReducer,
   userLogin: userLoginReducer,
   userSignUp: userSignUpReducer,
+  userDetails: userDetailsReducer,
+  userPosts: userPostsReducer,
 });
 
 export default rootReducer;

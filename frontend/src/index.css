@@ -26,7 +26,6 @@ a {
 h2 {
   text-align: center;
   padding-bottom: 3px;
-  padding-top: 3rem;
 }
 
 .underline {
@@ -34,6 +33,7 @@ h2 {
   width: 75px;
   height: 2px;
   background-color: var(--clr-primary);
+  margin-bottom: 2rem;
 }
 
 button {
@@ -254,6 +254,16 @@ main {
   background-color: rgb(199, 58, 58);
 }
 
+.alert-box {
+  background-color: rgb(146, 89, 89);
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+  align-items: center;
+  border-radius: 8px;
+  height: max-content;
+}
+
 /* Single Item Page */
 
 .single-post-page {
@@ -317,6 +327,7 @@ main {
   position: relative;
 }
 
+.form-details input,
 .form-auth input {
   padding: 0.5rem;
   width: 100%;
@@ -330,6 +341,31 @@ main {
   left: 0;
   color: rebeccapurple;
   font-size: 14px;
+}
+
+/* Profile Page */
+.profile-page-container {
+  width: 90vw;
+  max-width: 1170px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: auto 300px;
+  justify-content: center;
+  justify-items: center;
+  column-gap: 1rem;
+}
+
+/* User Details Form */
+
+.form-details {
+  padding: 1rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  background-color: #fff;
+  margin-top: 3rem;
+  height: fit-content;
 }
 
 /* Loader */

@@ -12,10 +12,8 @@ class HomePage extends Component {
   render() {
     return (
       <main className='page'>
-        {/* <h2>Home Page📝📝</h2>
-        <div className='underline'></div> */}
         <div className='home-container'>
-          <Posts />
+          <Posts title='All Posts' posts={this.props.posts} />
           <Form />
         </div>
       </main>
@@ -23,8 +21,12 @@ class HomePage extends Component {
   }
 }
 
+const mapStateToProps = state => ({
+  posts: state.posts,
+});
+
 const mapDispatchToProps = dispatch => ({
   getPosts: () => dispatch(getPosts()),
 });
 
-export default connect(null, mapDispatchToProps)(HomePage);
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

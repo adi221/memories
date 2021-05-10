@@ -8,7 +8,7 @@ import { deletePost, likePost } from '../actions/postsActions';
 class Post extends Component {
   render() {
     const {
-      creator,
+      username,
       likeCount,
       message,
       selectedFile,
@@ -20,15 +20,15 @@ class Post extends Component {
 
     return (
       <article className='post-preview'>
-        <div className='post-preview-creator'>{creator}</div>
+        <div className='post-preview-creator'>{username}</div>
         <div className='post-preview-created-at'>
           {moment(createdAt).fromNow()}
         </div>
         <img src={selectedFile} alt={title} />
         <div className='content'>
           <div className='content-tags'>
-            {tags.map((tag, index) => (
-              <span key={index}>#{tag}</span>
+            {tags.split(',').map((tag, index) => (
+              <span key={index}>#{tag.trim()}</span>
             ))}
           </div>
           <Link to={`/posts/${_id}`}>
