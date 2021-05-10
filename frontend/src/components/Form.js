@@ -31,10 +31,17 @@ class Form extends Component {
     } else {
       this.props.createPost({ ...this.state });
     }
+    this.clearHandler();
   };
 
   clearHandler = () => {
-    this.setState({ creator: '', title: '', tags: '', selectedFile: '' });
+    this.setState({
+      creator: '',
+      title: '',
+      tags: '',
+      message: '',
+      selectedFile: '',
+    });
   };
 
   render() {
@@ -42,7 +49,7 @@ class Form extends Component {
     const { errorEdit, successEdit } = this.props.postEdit;
 
     return (
-      <form onSubmit={this.submitHandler}>
+      <form onSubmit={this.submitHandler} className='form-memory'>
         <h3>{this.props.title}</h3>
         <input
           type='text'

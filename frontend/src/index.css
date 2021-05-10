@@ -23,17 +23,10 @@ a {
   color: initial;
 }
 
-/* Home Page */
-main {
-  width: 90vw;
-  max-width: 1170px;
-  margin: 0 auto;
-  padding: 3rem;
-}
-
 h2 {
   text-align: center;
   padding-bottom: 3px;
+  padding-top: 3rem;
 }
 
 .underline {
@@ -41,6 +34,63 @@ h2 {
   width: 75px;
   height: 2px;
   background-color: var(--clr-primary);
+}
+
+button {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+/* Navbar */
+nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4rem;
+  background-color: var(--clr-primary);
+}
+
+.nav-center {
+  max-width: 1170px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+}
+
+.nav-header button {
+  display: none;
+}
+
+.nav-auth {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav-auth a,
+button {
+  padding: 0.2rem 0.3rem;
+  margin-left: 0.3rem;
+  color: #fff;
+  background-color: var(--clr-primary);
+  font-size: 16px;
+}
+
+.page {
+  margin-top: 4rem;
+}
+
+/* Home Page */
+main {
+  width: 90vw;
+  max-width: 1170px;
+  margin: 0 auto;
+  padding: 3rem;
 }
 
 .home-container {
@@ -154,7 +204,7 @@ h2 {
 
 /* Form */
 
-form {
+.form-memory {
   padding: 1rem;
   text-align: center;
   display: flex;
@@ -164,14 +214,14 @@ form {
   background-color: #fff;
 }
 
-form input {
+.form-memory input {
   padding: 0.5rem;
   width: 100%;
   margin: 0.5rem 0;
   outline: none;
 }
 
-form textarea {
+.form-memory textarea {
   padding: 0.5rem;
   margin: 0.5rem 0;
   height: 100px;
@@ -195,6 +245,7 @@ form textarea {
   opacity: 0.9;
 }
 
+.btn-auth,
 .submit-btn {
   background-color: rgb(13, 49, 13);
 }
@@ -208,7 +259,7 @@ form textarea {
 .single-post-page {
   position: relative;
   padding: 3rem;
-  margin: 0 auto;
+  margin: 3rem auto;
   max-width: 1170px;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -240,7 +291,8 @@ form textarea {
 }
 
 .edit-btn {
-  width: 100%;
+  width: 300px;
+  margin: 0 auto;
   background-color: var(--clr-primary);
   color: #fff;
   padding: 0.5rem;
@@ -250,6 +302,34 @@ form textarea {
   border: none;
   cursor: pointer;
   border-radius: 8px;
+}
+
+/* Auth forms */
+
+.form-auth {
+  padding: 1rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  background-color: #fff;
+  margin: 2rem auto;
+  position: relative;
+}
+
+.form-auth input {
+  padding: 0.5rem;
+  width: 100%;
+  margin: 0.5rem 0;
+  outline: none;
+}
+
+.auth-link {
+  position: absolute;
+  bottom: -24px;
+  left: 0;
+  color: rebeccapurple;
+  font-size: 14px;
 }
 
 /* Loader */

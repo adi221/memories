@@ -13,6 +13,14 @@ class SinglePostPage extends Component {
     };
   }
 
+  // static getDerivedStateFromProps(nextProps, prevState) {
+  //   //   if(nextProps.someValue!==prevState.someValue){
+  //   //     return { someState: nextProps.someValue};
+  //   //  }
+  //   console.log(nextProps, prevState);
+  //   return null;
+  // }
+
   componentDidMount() {
     this.props.getSinglePost(this.props.match.params.id);
   }
@@ -36,7 +44,7 @@ class SinglePostPage extends Component {
       message,
     } = post;
     return (
-      <div className='single-post-page'>
+      <div className='single-post-page page'>
         <img src={selectedFile} alt={title} />
         <div className='single-post-content'>
           <Link to='/' className='go-back-btn'>

@@ -11,9 +11,9 @@ class HomePage extends Component {
 
   render() {
     return (
-      <main>
-        <h2>Memories📝📝</h2>
-        <div className='underline'></div>
+      <main className='page'>
+        {/* <h2>Home Page📝📝</h2>
+        <div className='underline'></div> */}
         <div className='home-container'>
           <Posts />
           <Form />
