@@ -4,6 +4,7 @@ import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import SignUpPage from './pages/SignUpPage';
 import SinglePostPage from './pages/SinglePostPage';
+import ProfilePage from './pages/ProfilePage';
 import Navbar from './components/Navbar';
 
 class App extends Component {
@@ -13,6 +14,7 @@ class App extends Component {
         <Navbar />
         <Switch>
           <Route path='/' exact component={HomePage} />
+          <Route path='/profile' exact component={ProfilePage} />
           <Route path='/login' component={LoginPage} />
           <Route path='/signup' component={SignUpPage} />
           <Route path='/posts/:id' exact component={SinglePostPage} />
