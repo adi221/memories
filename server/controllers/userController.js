@@ -60,4 +60,32 @@ const getUserDetails = async (req, res) => {
   }
 };
 
-export { authUser, signUpUser, getUserDetails };
+const editUserDetails = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id);
+
+    if (user) {
+      user.username = req.body.username;
+      user.email = req.body.email;
+      user.password = req.body.newPassword
+        ? req.body.newPassword
+        : req.body.oldPassword;
+
+      const updatedUser = await user.save();
+      console.log(updatedUser);
+
+      res.json({
+        _id: updatedUser._id,
+        username: updatedUser.username,
+        email: updatedUser.email,
+        token: generateToken(updatedUser._id),
+      });
+    } else {
+      throw new Error('User not found');
+    }
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+};
+
+export { authUser, signUpUser, getUserDetails, editUserDetails };

@@ -42,8 +42,21 @@ export const likePost = async (req, res) => {
   try {
     const post = await PostMessage.findById(req.params.id);
     if (post) {
-      post.likeCount += 1;
-      await post.save();
+      const alreadyLikedIndex = post.likes.findIndex(
+        like => like.user.toString() === req.user._id.toString()
+      );
+      console.log(alreadyLikedIndex);
+      // Remove Like
+      if (alreadyLikedIndex > -1) {
+        post.likes.splice(alreadyLikedIndex, 1);
+        post.numLikes = post.likes.length;
+        await post.save();
+      } else {
+        // Add Like
+        post.likes.push({ user: req.user._id });
+        post.numLikes = post.likes.length;
+        await post.save();
+      }
     } else {
       throw new Error('Product not found');
     }

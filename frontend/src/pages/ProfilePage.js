@@ -15,6 +15,12 @@ class ProfilePage extends Component {
     this.props.getUserPosts(this.props.userInfo._id);
   }
 
+  componentWillReceiveProps(newProps) {
+    if (!newProps.userInfo?._id) {
+      this.props.history.push('/');
+    }
+  }
+
   render() {
     if (this.props.userDetails.loading || this.props.userPosts.loading)
       return <Loader />;

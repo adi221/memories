@@ -41,18 +41,29 @@ export const deletePost = id => async dispatch => {
     dispatch({ type: DELETE_POST_REQUEST });
     await axios.delete(`/posts/${id}`);
     dispatch({ type: DELETE_POST_SUCCESS });
-    getPosts();
   } catch (error) {
     dispatch({ type: DELETE_POST_FAIL, payload: error.message });
   }
 };
 
-export const likePost = id => async dispatch => {
+export const likePost = id => async (dispatch, getState) => {
   try {
     dispatch({ type: LIKE_POST_REQUEST });
-    await axios.put(`/posts/like/${id}`);
+
+    const {
+      userLogin: { user },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${user.token}`,
+      },
+    };
+
+    await axios.put(`/posts/like/${id}`, {}, config);
+
     dispatch({ type: LIKE_POST_SUCCESS });
-    getPosts();
   } catch (error) {
     dispatch({ type: LIKE_POST_FAIL, payload: error.message });
   }

@@ -1,5 +1,13 @@
 import mongoose from 'mongoose';
 
+const likeSchema = mongoose.Schema({
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: 'User',
+  },
+});
+
 const postSchema = mongoose.Schema(
   {
     user: {
@@ -23,7 +31,11 @@ const postSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    selectedFile: String,
+    selectedFile: {
+      type: String,
+      required: true,
+    },
+    likes: [likeSchema],
     numLikes: {
       type: Number,
       default: 0,

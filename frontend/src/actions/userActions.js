@@ -13,6 +13,9 @@ import {
   GET_USER_POSTS_REQUEST,
   GET_USER_POSTS_SUCCESS,
   GET_USER_POSTS_FAIL,
+  EDIT_USER_DETAILS_REQUEST,
+  EDIT_USER_DETAILS_SUCCESS,
+  EDIT_USER_DETAILS_FAIL,
 } from '../constants';
 
 export const userLogin = (username, password) => async dispatch => {
@@ -76,7 +79,7 @@ export const getUserDetails = id => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get(`/users/${id}`, config);
+    const { data } = await axios.get(`/users/${id}`, {}, config);
     dispatch({ type: USER_DETAILS_SUCCESS, payload: data });
   } catch (error) {
     dispatch({ type: USER_DETAILS_FAIL, payload: error.message });
@@ -100,5 +103,27 @@ export const getUserPosts = id => async (dispatch, getState) => {
     dispatch({ type: GET_USER_POSTS_SUCCESS, payload: data });
   } catch (error) {
     dispatch({ type: GET_USER_POSTS_FAIL, payload: error.message });
+  }
+};
+
+export const editUserDetails = userDetails => async (dispatch, getState) => {
+  try {
+    dispatch({ type: EDIT_USER_DETAILS_REQUEST });
+
+    const {
+      userLogin: { user },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${user.token}`,
+      },
+    };
+    const { data } = await axios.put(`/users/profile`, userDetails, config);
+    dispatch({ type: EDIT_USER_DETAILS_SUCCESS });
+    dispatch({ type: USER_DETAILS_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({ type: EDIT_USER_DETAILS_FAIL, payload: error.message });
   }
 };

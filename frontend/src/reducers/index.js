@@ -13,6 +13,7 @@ import {
   userSignUpReducer,
   userDetailsReducer,
   userPostsReducer,
+  userEditDetailsReducer,
 } from '../reducers/userReducers';
 
 const rootReducer = combineReducers({
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
   userSignUp: userSignUpReducer,
   userDetails: userDetailsReducer,
   userPosts: userPostsReducer,
+  userEditDetails: userEditDetailsReducer,
 });
 
 export default rootReducer;

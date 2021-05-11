@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { editUserDetails } from '../actions/userActions';
+import { EDIT_USER_DETAILS_RESET } from '../constants';
 
 class UserDetails extends Component {
   constructor(props) {
@@ -12,25 +15,35 @@ class UserDetails extends Component {
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.userEditDetails.error || nextProps.userEditDetails.success) {
+      this.setState({
+        oldPassword: '',
+        newPassword: '',
+        newPasswordConfirm: '',
+      });
+      setTimeout(() => {
+        this.props.resetDetails();
+      }, 2000);
+    }
+  }
+
   inputHandler = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
   submitHandler = e => {
     e.preventDefault();
-    const {
-      username,
-      email,
-      oldPassword,
-      newPassword,
-      newPasswordConfirm,
-    } = this.state;
+    const { username, email, oldPassword, newPassword, newPasswordConfirm } =
+      this.state;
     if (!email || !username || !oldPassword) return;
     if (newPassword !== newPasswordConfirm) return;
-    this.props.signup(username, email, oldPassword, newPassword);
+    this.props.editUserDetails({ username, email, oldPassword, newPassword });
   };
 
   render() {
+    const { loading, success, error } = this.props.userEditDetails;
+
     return (
       <>
         <form className='form-details' onSubmit={this.submitHandler}>
@@ -74,10 +87,22 @@ class UserDetails extends Component {
           <button type='submit' className='btn btn-auth'>
             Edit
           </button>
+          {loading && <p>Loading...</p>}
+          {error && <p>{error}</p>}
+          {success && <p>Successfully updated!</p>}
         </form>
       </>
     );
   }
 }
 
-export default UserDetails;
+const mapStateToProps = state => ({
+  userEditDetails: state.userEditDetails,
+});
+
+const mapDispatchToProps = dispatch => ({
+  editUserDetails: user => dispatch(editUserDetails(user)),
+  resetDetails: () => dispatch({ type: EDIT_USER_DETAILS_RESET }),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserDetails);

@@ -13,9 +13,20 @@ import {
   GET_USER_POSTS_REQUEST,
   GET_USER_POSTS_SUCCESS,
   GET_USER_POSTS_FAIL,
+  EDIT_USER_DETAILS_REQUEST,
+  EDIT_USER_DETAILS_SUCCESS,
+  EDIT_USER_DETAILS_FAIL,
+  EDIT_USER_DETAILS_RESET,
 } from '../constants';
 
-export const userLoginReducer = (state = {}, action) => {
+const userInfoFromStorage = localStorage.getItem('userInfoMemories')
+  ? JSON.parse(localStorage.getItem('userInfoMemories'))
+  : null;
+
+export const userLoginReducer = (
+  state = { user: userInfoFromStorage },
+  action
+) => {
   switch (action.type) {
     case USER_LOGIN_REQUEST:
       return { loading: true };
@@ -66,6 +77,21 @@ export const userPostsReducer = (state = { posts: [] }, action) => {
       return { loading: false, posts: action.payload };
     case GET_USER_POSTS_FAIL:
       return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const userEditDetailsReducer = (state = {}, action) => {
+  switch (action.type) {
+    case EDIT_USER_DETAILS_REQUEST:
+      return { loading: true };
+    case EDIT_USER_DETAILS_SUCCESS:
+      return { loading: false, success: true };
+    case EDIT_USER_DETAILS_FAIL:
+      return { loading: false, error: action.payload };
+    case EDIT_USER_DETAILS_RESET:
+      return {};
     default:
       return state;
   }
